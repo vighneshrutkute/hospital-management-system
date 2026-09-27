@@ -6,7 +6,7 @@ from datetime import date
 from decimal import Decimal, InvalidOperation
 
 app = Flask(__name__)
-app.secret_key = 'hospital_secret_key'
+app.secret_key = os.environ.get("SECRET_KEY", "hospital_secret_key")
 
 # ─── DB CONNECTION ───────────────────────────────────────────http://127.0.0.1:5000/
 def get_db():
