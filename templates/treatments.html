@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Treatments – HMS{% endblock %}
+{% block page_title %}Treatments{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>💊 Treatments</h1><p>Patient treatment records</p></div>
+  <a href="{{ url_for('add_treatment') }}" class="btn btn-primary">➕ Add Treatment</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Treatments</h2><span class="badge-pill">{{ treatments|length }} records</span></div>
+  <div class="table-wrap">
+    {% if treatments %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Patient</th><th>Doctor</th><th>Diagnosis</th><th>Status</th><th>Date</th><th>Description</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for t in treatments %}
+        <tr>
+          <td><strong>{{ t.treatment_id }}</strong></td>
+          <td>{{ t.patient_name }}</td>
+          <td>{{ t.doctor_name }}</td>
+          <td><strong>{{ t.diagnosis }}</strong></td>
+          <td>
+            <span class="badge
+              {{ 'badge-warning' if t.status == 'Ongoing'
+                 else 'badge-success' if t.status == 'Completed'
+                 else 'badge-secondary' }}">
+              {{ t.status }}
+            </span>
+          </td>
+          <td>{{ t.treatment_date }}</td>
+          <td>{{ t.treatment_desc[:60] if t.treatment_desc }}{% if t.treatment_desc and t.treatment_desc|length > 60 %}…{% endif %}</td>
+          <td>
+            <a href="{{ url_for('delete_treatment', tid=t.treatment_id) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">💊</div><p>No treatments found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

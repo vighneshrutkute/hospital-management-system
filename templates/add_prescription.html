@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Add Prescription – HMS{% endblock %}
+{% block page_title %}Add Prescription{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>➕ New Prescription</h1></div>
+  <a href="{{ url_for('prescriptions') }}" class="btn btn-outline">← Back</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 Prescription Details</h2></div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Treatment / Patient *</label>
+          <select name="treatment_id" required>
+            <option value="">Select Treatment</option>
+            {% for t in treatments %}
+            <option value="{{ t.treatment_id }}">{{ t.label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dosage *</label>
+          <input type="text" name="dosage" required placeholder="e.g. 1 tablet twice daily">
+        </div>
+        <div class="form-group">
+          <label>Duration *</label>
+          <input type="text" name="duration" required placeholder="e.g. 7 Days">
+        </div>
+        <div class="form-group form-full">
+          <label>Instructions</label>
+          <textarea name="instructions" placeholder="e.g. Take after meals"></textarea>
+        </div>
+        <div class="form-group form-full">
+          <label>Select Medicines</label>
+          <div class="check-group">
+            {% for m in medicines %}
+            <label>
+              <input type="checkbox" name="medicines" value="{{ m.medicine_id }}">
+              {{ m.medicine_name }} (₹{{ m.price }})
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">✅ Save Prescription</button>
+        <a href="{{ url_for('prescriptions') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Departments – HMS{% endblock %}
+{% block page_title %}Departments{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>🏢 Departments</h1><p>Hospital departments and locations</p></div>
+  <a href="{{ url_for('add_department') }}" class="btn btn-primary">➕ Add Department</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Departments</h2><span class="badge-pill">{{ departments|length }} records</span></div>
+  <div class="table-wrap">
+    {% if departments %}
+    <table>
+      <thead><tr><th>#</th><th>Department Name</th><th>Location</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for d in departments %}
+        <tr>
+          <td><strong>{{ d.dept_id }}</strong></td>
+          <td><strong>{{ d.dept_name }}</strong></td>
+          <td>📍 {{ d.dept_location }}</td>
+          <td>
+            <a href="{{ url_for('delete_department', did=d.dept_id) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🏢</div><p>No departments found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

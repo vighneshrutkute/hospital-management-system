@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Rooms – HMS{% endblock %}
+{% block page_title %}Rooms{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>🛏️ Rooms</h1><p>Room inventory and availability</p></div>
+  <a href="{{ url_for('add_room') }}" class="btn btn-primary">➕ Add Room</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Rooms</h2><span class="badge-pill">{{ rooms|length }} rooms</span></div>
+  <div class="table-wrap">
+    {% if rooms %}
+    <table>
+      <thead><tr><th>Room No</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for r in rooms %}
+        <tr>
+          <td><strong>Room {{ r.room_no }}</strong></td>
+          <td><span class="badge badge-info">{{ r.room_type }}</span></td>
+          <td>
+            <span class="badge {{ 'badge-success' if r.status == 'Available' else 'badge-danger' }}">
+              {{ r.status }}
+            </span>
+          </td>
+          <td>
+            <a href="{{ url_for('delete_room', rno=r.room_no) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🛏️</div><p>No rooms found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Prescriptions – HMS{% endblock %}
+{% block page_title %}Prescriptions{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>📋 Prescriptions</h1><p>All patient prescriptions</p></div>
+  <a href="{{ url_for('add_prescription') }}" class="btn btn-primary">➕ New Prescription</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Prescriptions</h2><span class="badge-pill">{{ prescriptions|length }} records</span></div>
+  <div class="table-wrap">
+    {% if prescriptions %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Patient</th><th>Doctor</th><th>Diagnosis</th><th>Dosage</th><th>Duration</th><th>Medicines</th><th>Instructions</th></tr>
+      </thead>
+      <tbody>
+        {% for rx in prescriptions %}
+        <tr>
+          <td><strong>{{ rx.prescription_id }}</strong></td>
+          <td>{{ rx.patient_name }}</td>
+          <td>{{ rx.doctor_name }}</td>
+          <td>{{ rx.diagnosis }}</td>
+          <td>{{ rx.dosage }}</td>
+          <td><span class="badge badge-info">{{ rx.duration }}</span></td>
+          <td>
+            {% for m in rx.medicines %}
+              <span class="badge badge-success">{{ m }}</span>
+            {% endfor %}
+          </td>
+          <td>{{ rx.instructions }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">📋</div><p>No prescriptions found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

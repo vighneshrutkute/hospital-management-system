@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Allocate Room – HMS{% endblock %}
+{% block page_title %}Allocate Room{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>➕ Allocate Room</h1></div>
+  <a href="{{ url_for('allocations') }}" class="btn btn-outline">← Back</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>🏨 Allocation Details</h2></div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Patient *</label>
+          <select name="patient_id" required>
+            <option value="">Select Patient</option>
+            {% for p in patients %}
+            <option value="{{ p.patient_id }}">{{ p.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Room (Available Only) *</label>
+          <select name="room_no" required>
+            <option value="">Select Room</option>
+            {% for r in rooms %}
+            <option value="{{ r.room_no }}">Room {{ r.room_no }} – {{ r.room_type }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bed Number</label>
+          <input type="number" name="bed_no" placeholder="e.g. 1">
+        </div>
+        <div class="form-group">
+          <label>Admission Reason</label>
+          <input type="text" name="admission_reason" placeholder="e.g. Post-surgery observation">
+        </div>
+        <div class="form-group">
+          <label>Admission Date *</label>
+          <input type="date" name="admission_date" required>
+        </div>
+        <div class="form-group">
+          <label>Discharge Date (optional)</label>
+          <input type="date" name="discharge_date">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">✅ Allocate Room</button>
+        <a href="{{ url_for('allocations') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

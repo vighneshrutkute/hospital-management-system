@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Book Appointment – HMS{% endblock %}
+{% block page_title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>➕ Book Appointment</h1></div>
+  <a href="{{ url_for('appointments') }}" class="btn btn-outline">← Back</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📅 Appointment Details</h2></div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Patient *</label>
+          <select name="patient_id" required>
+            <option value="">Select Patient</option>
+            {% for p in patients %}
+            <option value="{{ p.patient_id }}">{{ p.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Doctor *</label>
+          <select name="doctor_id" required>
+            <option value="">Select Doctor</option>
+            {% for d in doctors %}
+            <option value="{{ d.doctor_id }}">{{ d.dname }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Appointment Date *</label>
+          <input type="date" name="appointment_date" required>
+        </div>
+        <div class="form-group">
+          <label>Appointment Time *</label>
+          <input type="time" name="appointment_time" required>
+        </div>
+        <div class="form-group">
+          <label>Consultation Mode</label>
+          <select name="consultation_mode">
+            <option>Offline</option>
+            <option>Online</option>
+          </select>
+        </div>
+        <div class="form-group form-full">
+          <label>Reason for Visit</label>
+          <textarea name="reason" placeholder="Describe the reason..."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">✅ Book Appointment</button>
+        <a href="{{ url_for('appointments') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

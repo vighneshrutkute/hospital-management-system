@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Room Allocations – HMS{% endblock %}
+{% block page_title %}Room Allocations{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>🏨 Room Allocations</h1><p>Patient admissions and room assignments</p></div>
+  <a href="{{ url_for('add_allocation') }}" class="btn btn-primary">➕ Allocate Room</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Allocations</h2><span class="badge-pill">{{ allocations|length }} records</span></div>
+  <div class="table-wrap">
+    {% if allocations %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Patient</th><th>Room</th><th>Type</th><th>Bed</th><th>Reason</th><th>Admission</th><th>Discharge</th></tr>
+      </thead>
+      <tbody>
+        {% for a in allocations %}
+        <tr>
+          <td><strong>{{ a.allocation_id }}</strong></td>
+          <td>{{ a.patient_name }}</td>
+          <td><strong>Room {{ a.room_no }}</strong></td>
+          <td><span class="badge badge-info">{{ a.room_type }}</span></td>
+          <td>Bed {{ a.bed_no }}</td>
+          <td>{{ a.admission_reason }}</td>
+          <td>{{ a.admission_date }}</td>
+          <td>{{ a.discharge_date or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🏨</div><p>No allocations found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Add Department – HMS{% endblock %}
+{% block page_title %}Add Department{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>➕ Add Department</h1></div>
+  <a href="{{ url_for('departments') }}" class="btn btn-outline">← Back</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>🏢 Department Info</h2></div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Department Name *</label>
+          <input type="text" name="dept_name" required placeholder="e.g. Cardiology">
+        </div>
+        <div class="form-group">
+          <label>Location *</label>
+          <input type="text" name="dept_location" required placeholder="e.g. First Floor">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">✅ Add Department</button>
+        <a href="{{ url_for('departments') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Edit Doctor – HMS{% endblock %}
+{% block page_title %}Edit Doctor{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>✏️ Edit Doctor</h1></div>
+  <a href="{{ url_for('doctors') }}" class="btn btn-outline">← Back</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>👨‍⚕️ Edit Information</h2></div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="dname" value="{{ doctor.dname }}" required>
+        </div>
+        <div class="form-group">
+          <label>Specialization</label>
+          <input type="text" name="specialization" value="{{ doctor.specialization }}">
+        </div>
+        <div class="form-group">
+          <label>Qualification</label>
+          <input type="text" name="qualification" value="{{ doctor.qualification }}">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" name="phone_no" value="{{ doctor.phone_no }}">
+        </div>
+        <div class="form-group">
+          <label>Consultation Fee (₹)</label>
+          <input type="number" name="consultation_fee" step="0.01" value="{{ doctor.consultation_fee }}">
+        </div>
+        <div class="form-group">
+          <label>Joining Date</label>
+          <input type="date" name="joining_date" value="{{ doctor.joining_date }}">
+        </div>
+        <div class="form-group">
+          <label>Department</label>
+          <select name="dept_id">
+            <option value="">Select</option>
+            {% for d in depts %}
+            <option value="{{ d.dept_id }}" {{ 'selected' if doctor.dept_id == d.dept_id }}>{{ d.dept_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+        <a href="{{ url_for('doctors') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

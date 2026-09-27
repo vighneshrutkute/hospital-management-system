@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Medicines – HMS{% endblock %}
+{% block page_title %}Medicines{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>💉 Medicines</h1><p>Medicine inventory</p></div>
+  <a href="{{ url_for('add_medicine') }}" class="btn btn-primary">➕ Add Medicine</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 Medicine Inventory</h2><span class="badge-pill">{{ medicines|length }} items</span></div>
+  <div class="table-wrap">
+    {% if medicines %}
+    <table>
+      <thead><tr><th>#</th><th>Medicine Name</th><th>Price (₹)</th><th>Expiry Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for m in medicines %}
+        <tr>
+          <td><strong>{{ m.medicine_id }}</strong></td>
+          <td><strong>{{ m.medicine_name }}</strong></td>
+          <td>₹{{ m.price }}</td>
+          <td>{{ m.expiry_date }}</td>
+          <td>
+            <a href="{{ url_for('delete_medicine', mid=m.medicine_id) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">💉</div><p>No medicines found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

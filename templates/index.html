@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard – HMS{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="welcome-banner">
+  <div>
+    <h1>Welcome to Neo Pulse Hospital</h1>
+    <p>Hospital Management System — manage patients, doctors, appointments & more.</p>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon blue">🧑‍⚕️</div>
+    <div class="stat-info">
+      <h3>{{ patients }}</h3>
+      <p>Total Patients</p>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green">👨‍⚕️</div>
+    <div class="stat-info">
+      <h3>{{ doctors }}</h3>
+      <p>Total Doctors</p>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon orange">📅</div>
+    <div class="stat-info">
+      <h3>{{ appointments }}</h3>
+      <p>Appointments</p>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon teal">🛏️</div>
+    <div class="stat-info">
+      <h3>{{ rooms }}</h3>
+      <p>Rooms Available</p>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:24px">
+  <div class="card-header"><h2>⚡ Quick Actions</h2></div>
+  <div class="card-body">
+    <div class="quick-grid">
+      <a href="{{ url_for('add_patient') }}" class="quick-card">
+        <span class="qicon">➕</span><span>Add Patient</span>
+      </a>
+      <a href="{{ url_for('add_appointment') }}" class="quick-card">
+        <span class="qicon">📅</span><span>Book Appointment</span>
+      </a>
+      <a href="{{ url_for('add_treatment') }}" class="quick-card">
+        <span class="qicon">💊</span><span>Add Treatment</span>
+      </a>
+      <a href="{{ url_for('add_prescription') }}" class="quick-card">
+        <span class="qicon">📋</span><span>New Prescription</span>
+      </a>
+      <a href="{{ url_for('add_allocation') }}" class="quick-card">
+        <span class="qicon">🏨</span><span>Allocate Room</span>
+      </a>
+      <a href="{{ url_for('add_bill') }}" class="quick-card">
+        <span class="qicon">🧾</span><span>Generate Bill</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="stats-grid">
+  {% set modules = [
+    ('patients', '🧑‍⚕️', 'Patients', 'View & manage patient records'),
+    ('doctors', '👨‍⚕️', 'Doctors', 'Doctor profiles & departments'),
+    ('appointments', '📅', 'Appointments', 'Schedule & view appointments'),
+    ('treatments', '💊', 'Treatments', 'Patient treatment records'),
+    ('billing', '🧾', 'Billing', 'Bills & payment status'),
+    ('rooms', '🛏️', 'Rooms', 'Room availability & types'),
+  ] %}
+  {% for ep, icon, name, desc in modules %}
+  <a href="{{ url_for(ep) }}" style="text-decoration:none">
+    <div class="stat-card" style="cursor:pointer">
+      <div class="stat-icon blue" style="font-size:22px">{{ icon }}</div>
+      <div class="stat-info">
+        <h3 style="font-size:16px">{{ name }}</h3>
+        <p>{{ desc }}</p>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

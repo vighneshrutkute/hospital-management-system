@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Appointments – HMS{% endblock %}
+{% block page_title %}Appointments{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>📅 Appointments</h1><p>All booked appointments</p></div>
+  <a href="{{ url_for('add_appointment') }}" class="btn btn-primary">➕ Book Appointment</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Appointments</h2><span class="badge-pill">{{ appointments|length }} records</span></div>
+  <div class="table-wrap">
+    {% if appointments %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Mode</th><th>Reason</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td><strong>{{ a.appointment_id }}</strong></td>
+          <td>{{ a.patient_name }}</td>
+          <td>{{ a.doctor_name }}</td>
+          <td>{{ a.appointment_date }}</td>
+          <td>{{ a.appointment_time }}</td>
+          <td>
+            <span class="badge {{ 'badge-success' if a.consultation_mode == 'Online' else 'badge-info' }}">
+              {{ a.consultation_mode }}
+            </span>
+          </td>
+          <td>{{ a.reason }}</td>
+          <td>
+            <a href="{{ url_for('delete_appointment', aid=a.appointment_id) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">📅</div><p>No appointments found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

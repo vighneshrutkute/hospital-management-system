@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Billing – HMS{% endblock %}
+{% block page_title %}Billing{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div><h1>🧾 Billing</h1><p>Patient bills and payment records</p></div>
+  <a href="{{ url_for('add_bill') }}" class="btn btn-primary">➕ Generate Bill</a>
+</div>
+<div class="card">
+  <div class="card-header"><h2>📋 All Bills</h2><span class="badge-pill">{{ bills|length }} records</span></div>
+  <div class="table-wrap">
+    {% if bills %}
+    <table>
+      <thead>
+        <tr><th>#</th><th>Patient</th><th>Doctor Fee</th><th>Medicine Fee</th><th>Room Charge</th><th>Total</th><th>Method</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for b in bills %}
+        <tr>
+          <td><strong>{{ b.bill_id }}</strong></td>
+          <td>{{ b.patient_name }}</td>
+          <td>₹{{ b.doctor_fee }}</td>
+          <td>₹{{ b.medicine_fee }}</td>
+          <td>₹{{ b.room_charge }}</td>
+          <td><strong>₹{{ b.total_amount }}</strong></td>
+          <td>{{ b.payment_method }}</td>
+          <td>{{ b.payment_date }}</td>
+          <td>
+            <span class="badge {{ 'badge-success' if b.payment_status == 'Paid' else 'badge-danger' }}">
+              {{ b.payment_status }}
+            </span>
+          </td>
+          <td>
+            <a href="{{ url_for('delete_bill', bid=b.bill_id) }}"
+               class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🧾</div><p>No bills found.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

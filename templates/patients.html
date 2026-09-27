@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Patients – HMS{% endblock %}
+{% block page_title %}Patients{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>🧑‍⚕️ Patient Records</h1>
+    <p>Manage all registered patients</p>
+  </div>
+  <a href="{{ url_for('add_patient') }}" class="btn btn-primary">➕ Add Patient</a>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>📋 All Patients</h2>
+    <span class="badge-pill">{{ patients|length }} records</span>
+  </div>
+  <div class="table-wrap">
+    {% if patients %}
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Name</th><th>DOB</th><th>Gender</th>
+          <th>Blood Group</th><th>Phone</th><th>Address</th>
+          <th>Reg. Date</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in patients %}
+        <tr>
+          <td><strong>{{ p.patient_id }}</strong></td>
+          <td><strong>{{ p.first_name }} {{ p.middle_name or '' }} {{ p.last_name }}</strong></td>
+          <td>{{ p.dob }}</td>
+          <td>
+            <span class="badge {{ 'badge-info' if p.gender == 'Male' else 'badge-warning' }}">
+              {{ p.gender }}
+            </span>
+          </td>
+          <td><span class="badge badge-danger">{{ p.blood_group }}</span></td>
+          <td>📞 {{ p.phone_no }}</td>
+          <td>{{ p.address }}</td>
+          <td>{{ p.reg_date }}</td>
+          <td>
+            <a href="{{ url_for('edit_patient', pid=p.patient_id) }}" class="btn btn-warning btn-sm">✏️ Edit</a>
+            <a href="{{ url_for('delete_patient', pid=p.patient_id) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Delete this patient?')">🗑️ Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🧑‍⚕️</div>
+      <p>No patients found. <a href="{{ url_for('add_patient') }}">Add the first patient →</a></p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
